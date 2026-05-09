@@ -273,6 +273,27 @@ npm run build
 
 ---
 
+## CI / Validação Automatizada
+
+O projeto possui workflow de CI utilizando GitHub Actions para validação automática de:
+
+### Backend
+- Instalação de dependências
+- Migrations do banco
+- Testes automatizados
+- Build da aplicação
+
+### Frontend
+- Instalação de dependências
+- Lint
+- Build da aplicação
+
+O workflow é executado automaticamente em:
+- push na branch `main`
+- pull requests para `main`
+
+---
+
 # Licença
 
 Projeto desenvolvido como avaliação do módulo Fundamentos Técnicos e Estratégicos da Pós-Graduação Full Stack.
