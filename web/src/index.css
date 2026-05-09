@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+@import "tailwindcss";
+/* @import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities"; */
+
+@theme {
+    --color-blue-base: #2c46b1;
+    --color-blue-dark: #2c4091;
+    --color-gray-100: #f9f9fb;
+    --color-gray-200: #e4e6ec;
+    --color-gray-300: #cdcfd5;
+    --color-gray-400: #74798b;
+    --color-gray-500: #4d505c;
+    --color-gray-600: #1f2025;
+    --color-danger: #b12c4d;
+    --font-sans: "Open Sans", sans-serif;
+}
+
+
+@property --border-angle {
+    inherits: false;
+    initial-value: 0deg;
+    syntax: "<angle>";
+}
+
+
+@layer base {
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        background: #e4e6ec;
+    }
+
+    body {
+        margin: 0;
+        min-width: 320px;
+        font-family: "Open Sans", sans-serif;
+        background: #e4e6ec;
+        color: #1f2025;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+        font: inherit;
+    }
+
+    #root {
+        min-height: 100vh;
+    }
+
+    ::selection {
+        background: rgba(44, 70, 177, 0.16);
+    }
+}
