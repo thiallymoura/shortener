@@ -46,10 +46,13 @@ describe('export links', () => {
       })
     })
 
+    expect(csvAsString.startsWith('\uFEFF')).toBe(true)
+
     const csvAsArray = csvAsString
+      .slice(1)
       .trim()
-      .split('\n')
-      .map(row => row.split(','))
+      .split('\r\n')
+      .map(row => row.split(';'))
 
     expect(isRight(sut)).toBe(true)
     expect(unwrapEither(sut).reportUrl).toBe('http://example.com/file.csv')
@@ -57,12 +60,12 @@ describe('export links', () => {
       /^links-\d+-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.csv$/
     )
     expect(csvAsArray).toEqual([
-      ['originalUrl', 'shortUrl', 'accessCount', 'createdAt'],
-      [link1.originalUrl, link1.shortUrl, String(link1.accessCount), expect.any(String)],
-      [link2.originalUrl, link2.shortUrl, String(link2.accessCount), expect.any(String)],
-      [link3.originalUrl, link3.shortUrl, String(link3.accessCount), expect.any(String)],
-      [link4.originalUrl, link4.shortUrl, String(link4.accessCount), expect.any(String)],
-      [link5.originalUrl, link5.shortUrl, String(link5.accessCount), expect.any(String)],
+      ['ID', 'Original URL', 'Short URL', 'Access Count', 'Created At'],
+      [link1.id, link1.originalUrl, link1.shortUrl, String(link1.accessCount), expect.any(String)],
+      [link2.id, link2.originalUrl, link2.shortUrl, String(link2.accessCount), expect.any(String)],
+      [link3.id, link3.originalUrl, link3.shortUrl, String(link3.accessCount), expect.any(String)],
+      [link4.id, link4.originalUrl, link4.shortUrl, String(link4.accessCount), expect.any(String)],
+      [link5.id, link5.originalUrl, link5.shortUrl, String(link5.accessCount), expect.any(String)],
     ])
   })
 })

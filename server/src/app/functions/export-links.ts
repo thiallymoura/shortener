@@ -27,6 +27,7 @@ export async function exportLinks(
 
   const { sql, params } = db
     .select({
+      id: schema.links.id,
       originalUrl: schema.links.originalUrl,
       shortUrl: schema.links.shortUrl,
       accessCount: schema.links.accessCount,
@@ -46,17 +47,20 @@ export async function exportLinks(
   const cursor = pg.unsafe(sql, params as string[]).cursor(2)
 
   const csv = stringify({
-    delimiter: ',',
+    delimiter: ';',
     header: true,
+    record_delimiter: 'windows',
     columns: [
-      { key: 'original_url', header: 'originalUrl' },
-      { key: 'short_url', header: 'shortUrl' },
-      { key: 'access_count', header: 'accessCount' },
-      { key: 'created_at', header: 'createdAt' },
+      { key: 'id', header: 'ID' },
+      { key: 'original_url', header: 'Original URL' },
+      { key: 'short_url', header: 'Short URL' },
+      { key: 'access_count', header: 'Access Count' },
+      { key: 'created_at', header: 'Created At' },
     ],
   })
 
   const uploadToStorageStream = new PassThrough()
+  uploadToStorageStream.write('\uFEFF')
 
   const convertToCSVPipeline = pipeline(
     cursor,
@@ -75,7 +79,7 @@ export async function exportLinks(
   )
 
   const uploadToStorage = uploadFileToStorage({
-    contentType: 'text/csv',
+    contentType: 'text/csv; charset=utf-8',
     folder: 'downloads',
     fileName: `links-${Date.now()}-${randomUUID()}.csv`,
     contentStream: uploadToStorageStream,
